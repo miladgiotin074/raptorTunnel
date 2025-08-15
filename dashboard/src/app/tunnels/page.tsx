@@ -1,4 +1,6 @@
-import { WifiIcon, GlobeIcon, ActivityIcon, ServerIcon, TrendingUpIcon, NetworkIcon, ClockIcon, ShieldIcon, ZapIcon, BarChart3Icon, Users2Icon, MapPinIcon } from 'lucide-react';
+'use client';
+
+import { WifiIcon, GlobeIcon, ActivityIcon, ServerIcon, TrendingUpIcon, NetworkIcon, ClockIcon, ShieldIcon, ZapIcon, BarChart3Icon, Users2Icon, MapPinIcon, RefreshCwIcon } from 'lucide-react';
 
 export default function Tunnels() {
   // Dummy data for tunnels
@@ -52,11 +54,27 @@ export default function Tunnels() {
   const totalTrafficUp = tunnels.reduce((sum, tunnel) => sum + parseFloat(tunnel.traffic.up), 0);
   const totalTrafficDown = tunnels.reduce((sum, tunnel) => sum + parseFloat(tunnel.traffic.down), 0);
 
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
   return (
     <div className="p-6 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 min-h-screen text-gray-100">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">Tunnels</h1>
-        <p className="text-gray-400 mt-1">Manage and monitor VPN tunnels</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">Tunnels</h1>
+            <p className="text-gray-400 mt-1">Manage and monitor VPN tunnels</p>
+          </div>
+          <button
+            onClick={handleRefresh}
+            className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 hover:from-blue-500/30 hover:to-indigo-500/30 border border-blue-400/30 hover:border-blue-400/50 rounded-xl transition-all duration-300 group"
+            title="Refresh Tunnels"
+          >
+            <RefreshCwIcon className="h-5 w-5 text-blue-400 group-hover:text-blue-300 group-hover:rotate-180 transition-all duration-500" />
+            <span className="text-blue-400 group-hover:text-blue-300 font-medium">Refresh</span>
+          </button>
+        </div>
       </div>
 
       {/* Statistics Cards */}

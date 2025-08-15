@@ -35,7 +35,7 @@ export default function Settings() {
   return (
     <div className="p-6 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 min-h-screen text-gray-100">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">Settings</h1>
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Settings</h1>
         <p className="text-gray-400 mt-1">Configure your tunnel management system</p>
       </div>
 
@@ -62,6 +62,7 @@ export default function Settings() {
               <input 
                 type="text" 
                 value={settings.general.serverName}
+                onChange={(e) => setSettings({...settings, general: {...settings.general, serverName: e.target.value}})}
                 className="w-full bg-gray-700/50 border border-gray-600/50 rounded-lg px-4 py-3 text-gray-100 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 transition-all duration-300"
               />
             </div>
@@ -70,6 +71,7 @@ export default function Settings() {
               <label className="block text-sm font-medium text-gray-300 mb-3">Description</label>
               <textarea 
                 value={settings.general.description}
+                onChange={(e) => setSettings({...settings, general: {...settings.general, description: e.target.value}})}
                 rows={3}
                 className="w-full bg-gray-700/50 border border-gray-600/50 rounded-lg px-4 py-3 text-gray-100 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 transition-all duration-300 resize-none"
               />
@@ -123,6 +125,7 @@ export default function Settings() {
                   <input 
                     type="checkbox" 
                     checked={settings.security.twoFactorAuth}
+                    onChange={(e) => setSettings({...settings, security: {...settings.security, twoFactorAuth: e.target.checked}})}
                     className="sr-only"
                   />
                   <div className={`w-12 h-6 rounded-full transition-all duration-300 ${settings.security.twoFactorAuth ? 'bg-green-500' : 'bg-gray-600'}`}>
@@ -138,6 +141,7 @@ export default function Settings() {
                 <input 
                   type="number" 
                   value={settings.security.sessionTimeout}
+                  onChange={(e) => setSettings({...settings, security: {...settings.security, sessionTimeout: parseInt(e.target.value)}})}
                   className="w-full bg-gray-700/50 border border-gray-600/50 rounded-lg px-4 py-3 text-gray-100 focus:border-red-400 focus:ring-2 focus:ring-red-400/20 transition-all duration-300"
                 />
               </div>
@@ -147,6 +151,7 @@ export default function Settings() {
                 <input 
                   type="number" 
                   value={settings.security.loginAttempts}
+                  onChange={(e) => setSettings({...settings, security: {...settings.security, loginAttempts: parseInt(e.target.value)}})}
                   className="w-full bg-gray-700/50 border border-gray-600/50 rounded-lg px-4 py-3 text-gray-100 focus:border-red-400 focus:ring-2 focus:ring-red-400/20 transition-all duration-300"
                 />
               </div>
@@ -175,6 +180,7 @@ export default function Settings() {
                 <input 
                   type="number" 
                   value={settings.network.maxConnections}
+                  onChange={(e) => setSettings({...settings, network: {...settings.network, maxConnections: parseInt(e.target.value)}})}
                   className="w-full bg-gray-700/50 border border-gray-600/50 rounded-lg px-4 py-3 text-gray-100 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
                 />
               </div>

@@ -1,19 +1,19 @@
+'use client';
+
 import { RadialChart } from '@/components/DashboardCharts';
-import { CpuIcon, MemoryStickIcon, ClockIcon, HardDriveIcon, NetworkIcon, GlobeIcon, ActivityIcon, ServerIcon, TrendingUpIcon, WifiIcon, MapPinIcon } from 'lucide-react';
+import { CpuIcon, MemoryStickIcon, ClockIcon, HardDriveIcon, NetworkIcon, GlobeIcon, ActivityIcon, ServerIcon, TrendingUpIcon, WifiIcon, MapPinIcon, RefreshCwIcon } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
-async function getServerInfo() {
-  try {
-    const res = await fetch('http://ip-api.com/json/');
-    if (!res.ok) throw new Error('Failed to fetch');
-    return res.json();
-  } catch (error) {
-    console.error(error);
-    return { query: 'N/A', country: 'N/A' };
-  }
-}
-
-export default async function Home() {
-  const data = await getServerInfo();
+export default function Home() {
+  const [data, setData] = useState({ query: '192.168.1.100', country: 'Iran' });
+  
+  useEffect(() => {
+    // Mock data for development
+    setData({
+      query: '192.168.1.100',
+      country: 'Iran'
+    });
+  }, []);
 
   // Dummy data for metrics
   const cpuUsage = 45; // %
@@ -26,11 +26,28 @@ export default async function Home() {
 
   
 
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
   return (
     <div className="p-6 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 min-h-screen text-gray-100">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">Overview</h1>
-        <p className="text-gray-400 mt-1">Tunnel Management System</p>
+      {/* Header with Refresh Button */}
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent mb-2">
+            Dashboard Overview
+          </h1>
+          <p className="text-gray-400">Real-time system monitoring and analytics</p>
+        </div>
+        <button
+          onClick={handleRefresh}
+          className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-teal-500/20 to-cyan-500/20 hover:from-teal-500/30 hover:to-cyan-500/30 border border-teal-400/30 hover:border-teal-400/50 rounded-xl transition-all duration-300 group"
+          title="Refresh Dashboard"
+        >
+          <RefreshCwIcon className="h-5 w-5 text-teal-400 group-hover:text-teal-300 group-hover:rotate-180 transition-all duration-500" />
+          <span className="text-teal-400 group-hover:text-teal-300 font-medium">Refresh</span>
+        </button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {/* Total Tunnels Card */}
@@ -194,7 +211,18 @@ export default async function Home() {
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-400 text-sm">IPv4</span>
-                  <span className="text-teal-400 font-bold">{data.query}</span>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-teal-400 font-bold">{data.query}</span>
+                    <button 
+                      onClick={() => navigator.clipboard.writeText(data.query)}
+                      className="p-1 hover:bg-teal-500/20 rounded transition-colors duration-200 group"
+                      title="Copy IP Address"
+                    >
+                      <svg className="h-4 w-4 text-gray-400 group-hover:text-teal-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-400 text-sm">Protocol</span>
@@ -225,7 +253,7 @@ export default async function Home() {
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-400 text-sm">Country</span>
-                  <span className="text-blue-400 font-bold">{data.country} 🇮🇷</span>
+                  <span className="text-blue-400 font-bold">{data.country}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-400 text-sm">Region</span>
